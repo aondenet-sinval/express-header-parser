@@ -13,7 +13,7 @@ app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 2
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
-
+// app.use(express.json())
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -22,6 +22,17 @@ app.get('/', function (req, res) {
 // your first API endpoint...
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
+});
+app.get('/api/whoami', function (req, res) {
+  const { ip } = req
+  const software = req.headers['user-agent']
+  const language = req.headers['accept-language']
+  console.log(' user-agent=> ', ip, language, software );
+  res.json({
+    ipaddress: ip,
+    language: language,
+    software: software
+  });
 });
 
 // listen for requests :)
